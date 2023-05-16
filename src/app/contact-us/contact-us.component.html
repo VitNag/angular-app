@@ -1,0 +1,24 @@
+<form [formGroup]="formData" (ngSubmit)="submitForm()">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" formControlName="name">
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+    </div>
+    <div>
+      <label for="country">Country:</label>
+      <select id="country" formControlName="country" (change)="updateCities()">
+        <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+      </select>
+    </div>
+    <div>
+      <label for="city">City:</label>
+      <select id="city" formControlName="city" [disabled]="!formData.get('country')?.value">
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+    </div>
+    <button type="submit" [disabled]="formData.invalid">Submit</button>
+  </form>
+  
