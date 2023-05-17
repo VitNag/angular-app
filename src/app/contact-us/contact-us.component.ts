@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contact-us',
@@ -7,23 +6,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./contact-us.component.css']
 })
 export class ContactUsComponent {
-  formData: FormGroup;
+  formData = {
+    name: '',
+    email: '',
+    country: '',
+    city: ''
+  };
+
   countries = ['USA', 'Canada', 'Australia'];
   cities: string[] = [];
 
-  constructor() {
-    this.formData = new FormGroup({
-      name: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      country: new FormControl('', Validators.required),
-      city: new FormControl('', Validators.required)
-    });
-
-    this.formData.get('city')?.disable();
-  }
-
   updateCities() {
-    switch (this.formData.get('country')?.value) {
+    switch (this.formData.country) {
       case 'USA':
         this.cities = ['New York', 'Los Angeles', 'Chicago'];
         break;
@@ -37,19 +31,14 @@ export class ContactUsComponent {
         this.cities = [];
         break;
     }
-
-    if (this.formData.get('country')?.value) {
-      this.formData.get('city')?.enable();
-    } else {
-      this.formData.get('city')?.disable();
-    }
   }
 
   submitForm() {
-    if (this.formData.valid) {
-      console.log('Form submitted with data:', this.formData.value);
-    } else {
-      console.log('Invalid form');
-    }
+    console.log(`Form submitted with data: 
+    Name: ${this.formData.name}
+    Email: ${this.formData.email}
+    Country: ${this.formData.country}
+    City: ${this.formData.city}
+  `);
   }
 }
